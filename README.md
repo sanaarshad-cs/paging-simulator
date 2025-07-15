@@ -1,71 +1,102 @@
-# 📄 Paging Simulator
+# 📄 Paging Algorithm Simulator
 
-A visual simulator for **Page Replacement Algorithms**:  
-➡️ FIFO (First-In-First-Out)  
-➡️ LRU (Least Recently Used)  
-➡️ Optimal  
-➡️ Second Chance  
-➡️ Belady’s Anomaly  
+[![Try Live](https://img.shields.io/badge/Try%20Live-Click%20Here-brightgreen?style=for-the-badge)](https://sanaarshad-cs.github.io/paging-simulator/)
 
-Built using **HTML, CSS, and JavaScript**, this educational tool helps understand how these algorithms work step by step with colorful, interactive outputs.
+
+A visual simulator for classic **Page Replacement Algorithms** used in Operating Systems:
+
+🔹 FIFO (First-In-First-Out)  
+🔹 LRU (Least Recently Used)  
+🔹 Optimal Page Replacement  
+🔹 Second Chance Algorithm  
+🔹 Belady’s Anomaly Visualization  
+
+Built entirely with **HTML, CSS, and JavaScript** for easy learning, simulation, and interaction.
 
 ---
 
 ## 🚀 Live Demo
 
-👉 [Click here to try it live](https://your-username.github.io/your-repo-name/)  
-*(Replace with your actual GitHub Pages URL)*
+🎯 [Click here to try the simulator] (https://sanaarshad-cs.github.io/paging-simulator/)
 
 ---
 
-## 💡 Features
+## 📚 Features
 
-- 🔄 Simulate FIFO, LRU, Optimal, and Second-Chance algorithms
-- 📉 View detailed steps for each page reference
-- 🎯 Track hits and misses for each algorithm
-- 📊 Visualize Belady’s Anomaly
-- 💻 100% client-side (no server required)
+- ✅ Interactive input for frames and reference string
+- ✅ Clear table visualization with page hits/misses
+- ✅ Total hit/miss counter at the bottom
+- ✅ Each algorithm in a separate file
+- ✅ Lightweight and fast — no frameworks needed
+- ✅ Clean, modern UI with responsive design
 
 ---
 
-## 📁 Files in This Repository
+## 📁 File Structure
 
 | File | Description |
 |------|-------------|
-| `index.html` | Homepage for simulator |
-| `fifo.html` | FIFO algorithm simulation |
-| `lru.html` | LRU algorithm simulation |
-| `optimal.html` | Optimal algorithm simulation |
-| `second-chance.html` | Second-Chance algorithm simulation |
-| `belady.html` | Belady’s Anomaly visualization |
-| `README.md` | This documentation file |
+| `index.html` | Homepage — links to all algorithms |
+| `fifo.html` | FIFO page replacement simulation |
+| `lru.html` | LRU simulation |
+| `optimal.html` | Optimal algorithm |
+| `second-chance.html` | Second Chance algorithm |
+| `belady.html` | Belady's Anomaly visualizer |
+| `README.md` | Project documentation |
+| `images/` | (Optional) Folder for screenshots |
 
 ---
 
-## 📷 Preview
+## 📷 Screenshots
 
-> _(Add a screenshot here if you want)_  
-> Just take a screenshot of the simulator in action and upload it to the repo.
+> Want to preview before running live? Here's how each simulation looks:
 
----
+### 🔹 FIFO
+![FIFO Preview](images/fifo.png)
 
-## 📚 How to Use
+### 🔹 LRU
+![LRU Preview](images/lru.png)
 
-1. Clone or download this repository
-2. Open `index.html` in your browser
-3. Select an algorithm to simulate
-4. Enter number of frames and reference string
-5. View step-by-step table with hits/misses
+### 🔹 Optimal
+![Optimal Preview](images/optimal.png)
 
----
+### 🔹 Second Chance
+![Second Chance Preview](images/second-chance.png)
 
-## 🙋‍♀️ About the Author
-
-👩‍💻 Developed by **Sana Arshad**, a CS student passionate about  
-Artificial Intelligence, Web Development, and Problem Solving.
+### 🔹 Belady’s Anomaly
+![Belady Preview](images/belady.png)
 
 ---
 
-## 📎 License
+## 🧠 How to Use
 
-This project is open-source and available under the [MIT License](LICENSE).
+1. Open the [live demo](https://sanaarshad-cs.github.io/paging-simulator/) in your browser
+2. Choose an algorithm from the homepage
+3. Enter:
+   - Number of frames
+   - Page reference string (comma-separated)
+4. Click **Calculate**
+5. View the hit/miss result and step-by-step simulation table
+
+---
+
+## 👩‍💻 About the Author
+
+Developed by **Sana Arshad**, a CS student passionate about  
+**Artificial Intelligence, Full-Stack Web Development, and Problem Solving**.
+
+- 🌐 [LinkedIn](https://linkedin.com/in/your-link) 
+- 💻 [GitHub](https://github.com/sanaarshad-cs)
+- 📧 sanaarshad958@email.com 
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🌟 Star This Repo
+
+If you found this helpful, please ⭐ star this repository and share it with others!
