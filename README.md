@@ -49,22 +49,21 @@ Built entirely with **HTML, CSS, and JavaScript** for easy learning, simulation,
 
 ## 📷 Screenshots
 
-> Want to preview before running live? Here's how each simulation looks:
-
 ### 🔹 FIFO
-![FIFO Preview](images/fifo.png)
+![FIFO](./fifo.png)
 
 ### 🔹 LRU
-![LRU Preview](images/lru.png)
+![LRU](./lru.png)
 
 ### 🔹 Optimal
-![Optimal Preview](images/optimal.png)
+![Optimal](./optimal.png)
 
 ### 🔹 Second Chance
-![Second Chance Preview](images/second-chance.png)
+![Second Chance](./second-chance.png)
 
 ### 🔹 Belady’s Anomaly
-![Belady Preview](images/belady.png)
+![Belady](./belady.png)
+
 
 ---
 
