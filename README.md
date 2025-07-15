@@ -2,7 +2,6 @@
 
 [![Try Live](https://img.shields.io/badge/Try%20Live-Click%20Here-brightgreen?style=for-the-badge)](https://sanaarshad-cs.github.io/paging-simulator/)
 
-
 A visual simulator for classic **Page Replacement Algorithms** used in Operating Systems:
 
 🔹 FIFO (First-In-First-Out)  
@@ -17,18 +16,18 @@ Built entirely with **HTML, CSS, and JavaScript** for easy learning, simulation,
 
 ## 🚀 Live Demo
 
-🎯 [Click here to try the simulator] (https://sanaarshad-cs.github.io/paging-simulator/)
+🎯 [Click here to try the simulator](https://sanaarshad-cs.github.io/paging-simulator/)
 
 ---
 
 ## 📚 Features
 
-- ✅ Interactive input for frames and reference string
-- ✅ Clear table visualization with page hits/misses
-- ✅ Total hit/miss counter at the bottom
-- ✅ Each algorithm in a separate file
-- ✅ Lightweight and fast — no frameworks needed
-- ✅ Clean, modern UI with responsive design
+- ✅ Interactive input for frames and reference string  
+- ✅ Clear table visualization with page hits/misses  
+- ✅ Total hit/miss counter at the bottom  
+- ✅ Each algorithm in a separate file  
+- ✅ Lightweight and fast — no frameworks needed  
+- ✅ Clean, modern UI with responsive design  
 
 ---
 
@@ -43,50 +42,51 @@ Built entirely with **HTML, CSS, and JavaScript** for easy learning, simulation,
 | `second-chance.html` | Second Chance algorithm |
 | `belady.html` | Belady's Anomaly visualizer |
 | `README.md` | Project documentation |
-| `images/` | (Optional) Folder for screenshots |
+| `.png files` | Screenshots of each algorithm (saved in repo root) |
 
 ---
 
 ## 📷 Screenshots
 
-### 🔹 FIFO
-![FIFO](./fifo.png)
+> Preview how each algorithm looks before trying them:
 
-### 🔹 LRU
-![LRU](./lru.png)
+### 🔹 FIFO  
+![FIFO Preview](fifo.png)
 
-### 🔹 Optimal
-![Optimal](./optimal.png)
+### 🔹 LRU  
+![LRU Preview](lru.png)
 
-### 🔹 Second Chance
-![Second Chance](./second-chance.png)
+### 🔹 Optimal  
+![Optimal Preview](optimal.png)
 
-### 🔹 Belady’s Anomaly
-![Belady](./belady.png)
+### 🔹 Second Chance  
+![Second Chance Preview](second-chance.png)
 
+### 🔹 Belady’s Anomaly  
+![Belady Preview](belady.png)
 
 ---
 
 ## 🧠 How to Use
 
-1. Open the [live demo](https://sanaarshad-cs.github.io/paging-simulator/) in your browser
-2. Choose an algorithm from the homepage
+1. Open the [live demo](https://sanaarshad-cs.github.io/paging-simulator/)  
+2. Choose an algorithm from the homepage  
 3. Enter:
    - Number of frames
-   - Page reference string (comma-separated)
-4. Click **Calculate**
-5. View the hit/miss result and step-by-step simulation table
+   - Page reference string (comma-separated)  
+4. Click **Calculate**  
+5. View hit/miss result and step-by-step simulation
 
 ---
 
 ## 👩‍💻 About the Author
 
-Developed by **Sana Arshad**, a CS student passionate about  
+Developed by **Sana Arshad**, a Computer Science student passionate about  
 **Artificial Intelligence, Full-Stack Web Development, and Problem Solving**.
 
-- 🌐 [LinkedIn](https://linkedin.com/in/your-link) 
-- 💻 [GitHub](https://github.com/sanaarshad-cs)
-- 📧 sanaarshad958@email.com 
+📧 [sanaarshad958@gmail.com](mailto:sanaarshad958@gmail.com)  
+💼 [LinkedIn Profile](https://www.linkedin.com/in/sana-arshad-518890349)  
+💻 [GitHub](https://github.com/sanaarshad-cs)
 
 ---
 
