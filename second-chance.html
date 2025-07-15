@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Second Chance - Page Replacement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #28a745;
+      font-size: 2.5em;
+    }
+    h2 {
+      color: #218838;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 5px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+    .pages-row {
+      background-color: #FF8383;
+    }
+    .hits-misses-row td {
+      font-style: italic;
+      color: #555;
+    }
+    input[type="number"], input[type="text"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .highlight-row {
+      background-color: #ff8383;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Second Chance Page Replacement</h1>
+  </header>
+  <main>
+    <section class="content-section">
+      <h2>Definition</h2>
+      <p>
+        The Second Chance page replacement algorithm gives pages a second chance before being replaced. 
+        If a page is referenced, its reference bit is set to 1. When a page needs to be replaced, 
+        the page with a reference bit of 0 is replaced. If all pages have reference bit 1, all bits 
+        are reset and the replacement continues.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Second Chance Algorithm</h2>
+      <p>Follow these steps to implement the Second Chance algorithm:</p>
+      <ol>
+        <li>Initialize an empty list of frames and a corresponding list of reference bits.</li>
+        <li>For each page reference in the page reference string:</li>
+        <ol>
+          <li>Check if the page is already in memory (in frames).</li>
+          <li>If the page is in memory, set its reference bit to 1.</li>
+          <li>If the page is not in memory:</li>
+          <ol>
+            <li>If there is space in memory (empty frame), add the page to a free frame and set its reference bit to 0.</li>
+            <li>If memory is full, look for a page with reference bit 0:</li>
+            <ol>
+              <li>If such a page is found, replace it with the new page and set its reference bit to 0.</li>
+              <li>If all pages have reference bit 1, reset all reference bits and continue the search.</li>
+            </ol>
+          </ol>
+        </ol>
+        <li>Repeat until all page references are processed.</li>
+        <li>Output the final page frame content and the number of page faults.</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <h2>Second Chance Simulation</h2>
+      <form id="input-form">
+        <label for="numFrames">Number of Frames:</label>
+        <input type="number" id="numFrames" required min="1">
+        <label for="referenceString">Page Reference String (comma-separated):</label>
+        <input type="text" id="referenceString" required>
+        <button type="submit">Calculate</button>
+      </form>
+      <div id="output-container"></div>
+    </section>
+
+    <footer>
+      <a href="index.html">Back to Main Page</a>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('input-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const numFrames = parseInt(document.getElementById('numFrames').value);
+      const referenceString = document.getElementById('referenceString').value.split(',').map(Number);
+
+      if (isNaN(numFrames) || numFrames <= 0 || referenceString.some(isNaN)) {
+        alert('Please enter valid inputs.');
+        return;
+      }
+
+      secondChancePageReplacement(referenceString, numFrames);
+    });
+
+   function secondChancePageReplacement(referenceString, numFrames) {
+  let frames = Array(numFrames).fill(-1);
+  let referenceBits = Array(numFrames).fill(0);
+  let pageFaults = 0;
+  let hits = 0;
+  let pointer = 0;
+
+  const table = Array(numFrames).fill(null).map(() => Array(referenceString.length).fill('-'));
+  const hitsMisses = Array(referenceString.length).fill('Miss');
+
+  for (let i = 0; i < referenceString.length; i++) {
+    const currentPage = referenceString[i];
+
+    if (frames.includes(currentPage)) {
+      const index = frames.indexOf(currentPage);
+      referenceBits[index] = 1;
+      hits++;
+      hitsMisses[i] = 'Hit';
+    } else {
+      pageFaults++;
+
+      while (true) {
+        if (referenceBits[pointer] === 0) {
+          // Replace this frame
+          frames[pointer] = currentPage;
+          referenceBits[pointer] = 0;
+          pointer = (pointer + 1) % numFrames; // Advance after replacement
+          break;
+        } else {
+          referenceBits[pointer] = 0; // Give second chance
+          pointer = (pointer + 1) % numFrames;
+        }
+      }
+    }
+
+    for (let j = 0; j < numFrames; j++) {
+      table[j][i] = frames[j] !== -1 ? frames[j] : '-';
+    }
+  }
+
+  const outputContainer = document.getElementById('output-container');
+  let html = '<table><thead><tr><th>Step</th>';
+  for (let i = 0; i < referenceString.length; i++) {
+    html += `<th>${i + 1}</th>`;
+  }
+  html += '</tr><tr class="pages-row"><th>Pages</th>';
+  for (let i = 0; i < referenceString.length; i++) {
+    html += `<th>${referenceString[i]}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  for (let i = 0; i < numFrames; i++) {
+    html += `<tr><td>Frame ${i + 1}</td>`;
+    table[i].forEach(cell => {
+      html += `<td>${cell}</td>`;
+    });
+    html += '</tr>';
+  }
+
+  html += '<tr class="hits-misses-row"><td>Result</td>';
+  hitsMisses.forEach(result => {
+    html += `<td>${result}</td>`;
+  });
+  html += '</tr></tbody></table>';
+
+  html += `<p><strong>Total Hits:</strong> ${hits}</p>`;
+  html += `<p><strong>Total Page Faults (Misses):</strong> ${pageFaults}</p>`;
+  outputContainer.innerHTML = html;
+}
+
+  </script>
+</body>
+</html>

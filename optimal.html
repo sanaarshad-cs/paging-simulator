@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Optimal Page Replacement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #28a745;
+      font-size: 2.5em;
+    }
+    h2 {
+      color: #218838;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 5px;
+    }
+    p, ul, ol {
+      margin-bottom: 15px;
+    }
+    ul, ol {
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+    .row-pages {
+      background-color: #FF8383;
+      color: white;
+    }
+    input[type="number"], input[type="text"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    a:hover {
+            text-decoration: underline;
+        }
+    footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    .content-section {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .content-section h3 {
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Optimal Page Replacement</h1>
+  </header>
+  <main>
+    <section class="content-section">
+      <h2>Definition</h2>
+      <p>
+        The Optimal Page Replacement algorithm replaces the page that will not be used for the longest period of time in the future. This approach minimizes page faults but requires knowledge of future page references, which makes it impractical for actual implementation.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Advantages and Disadvantages</h2>
+      <h3>Advantages:</h3>
+      <ul>
+        <li>Provides the lowest possible number of page faults.</li>
+        <li>Useful as a benchmark for evaluating other algorithms.</li>
+      </ul>
+      <h3>Disadvantages:</h3>
+      <ul>
+        <li>Requires future knowledge, making it unrealistic for actual systems.</li>
+        <li>Only theoretical and cannot be implemented in real-time systems.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>Steps of the Optimal Algorithm</h2>
+      <ol>
+        <li>Initialize an empty list of frames.</li>
+        <li>For each page in the reference string:
+          <ol type="a">
+            <li>If the page is already in memory, do nothing (hit).</li>
+            <li>If the page is not in memory (miss):
+              <ol type="i">
+                <li>If there is space in memory, add it directly.</li>
+                <li>If memory is full:
+                  <ol type="1">
+                    <li>Look ahead in the reference string to see when each page is next used.</li>
+                    <li>Replace the page with the farthest next use or not used again.</li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <h2>Simulation</h2>
+      <form id="input-form">
+        <label for="numFrames">Number of Frames:</label>
+        <input type="number" id="numFrames" required min="1">
+        <label for="referenceString">Page Reference String (comma-separated):</label>
+        <input type="text" id="referenceString" required>
+        <button type="submit">Calculate</button>
+      </form>
+      <div id="output-container"></div>
+    </section>
+
+    <footer>
+      <a href="index.html">Back to Main Page</a>
+    </footer>
+  </main>
+
+<script>
+  document.getElementById('input-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const numFrames = parseInt(document.getElementById('numFrames').value);
+    const referenceString = document.getElementById('referenceString').value
+      .split(',')
+      .map(val => val.trim())
+      .filter(val => !isNaN(val))
+      .map(Number);
+
+    if (isNaN(numFrames) || numFrames <= 0 || referenceString.length === 0) {
+      alert('Please enter valid inputs.');
+      return;
+    }
+
+    optimalPageReplacement(referenceString, numFrames);
+  });
+
+  function optimalPageReplacement(referenceString, numFrames) {
+    let frames = Array(numFrames).fill(-1);
+    let hits = 0, misses = 0;
+    const table = Array(numFrames + 2).fill(null).map(() => Array(referenceString.length).fill('-'));
+
+    for (let i = 0; i < referenceString.length; i++) {
+      const currentPage = referenceString[i];
+
+      if (frames.includes(currentPage)) {
+        hits++;
+        table[numFrames + 1][i] = "Hit";
+      } else {
+        misses++;
+        table[numFrames + 1][i] = "Miss";
+
+        if (frames.includes(-1)) {
+          const emptyIndex = frames.indexOf(-1);
+          frames[emptyIndex] = currentPage;
+        } else {
+          let farthest = -1;
+          let pageToReplace = -1;
+
+          for (let j = 0; j < numFrames; j++) {
+            const nextUse = referenceString.slice(i + 1).indexOf(frames[j]);
+            if (nextUse === -1) {
+              pageToReplace = j;
+              break;
+            } else if (nextUse > farthest) {
+              farthest = nextUse;
+              pageToReplace = j;
+            }
+          }
+
+          frames[pageToReplace] = currentPage;
+        }
+      }
+
+      for (let j = 0; j < numFrames; j++) {
+        table[j + 1][i] = frames[j] !== -1 ? frames[j] : "-";
+      }
+
+      table[0][i] = currentPage;
+    }
+
+    displayResults(referenceString, table, hits, misses);
+  }
+
+  function displayResults(referenceString, table, hits, misses) {
+    const outputContainer = document.getElementById('output-container');
+    let html = '<table><thead><tr><th>Step</th>';
+
+    for (let i = 0; i < referenceString.length; i++) {
+      html += `<th>${i + 1}</th>`;
+    }
+
+    html += '</tr></thead><tbody>';
+    html += '<tr class="row-pages"><td>Pages</td>';
+    table[0].forEach(cell => {
+      html += `<td>${cell}</td>`;
+    });
+    html += '</tr>';
+
+    for (let i = 0; i < table.length - 2; i++) {
+      html += `<tr><td>Frame ${i + 1}</td>`;
+      table[i + 1].forEach(cell => {
+        html += `<td>${cell}</td>`;
+      });
+      html += '</tr>';
+    }
+
+    html += '<tr><td>Result</td>';
+    table[table.length - 1].forEach(cell => {
+      html += `<td>${cell}</td>`;
+    });
+    html += '</tr></tbody></table>';
+
+    html += `<p><strong>Total Hits:</strong> ${hits}</p>`;
+    html += `<p><strong>Total Misses:</strong> ${misses}</p>`;
+
+    outputContainer.innerHTML = html;
+  }
+</script>
+</body>
+</html>

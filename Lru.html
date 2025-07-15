@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LRU - Page Replacement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #28a745;
+      font-size: 2.5em;
+    }
+    h2 {
+      color: #218838;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 5px;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+    input[type="number"], input[type="text"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    a {
+      color: #28a745;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    .content-section {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .content-section h3 {
+      color: #155724;
+    }
+    .pages-row td {
+      background-color: #FF8383;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Least Recently Used (LRU) Page Replacement</h1>
+  </header>
+  <main>
+    <section class="content-section">
+      <h2>Definition</h2>
+      <p>
+        LRU (Least Recently Used) is a page replacement algorithm that removes the page that has been 
+        used the least recently. It keeps track of the recent usage of pages and replaces the one 
+        that hasn’t been accessed for the longest time.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Advantage</h2>
+      <ul>
+        <li><strong>Better Performance</strong>: LRU generally performs better than FIFO, especially in systems with a large number of pages.</li>
+        <li><strong>Reduces Page Faults</strong>: LRU can reduce the number of page faults by replacing pages that are less likely to be accessed again.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>Disadvantage</h2>
+      <ul>
+        <li><strong>Higher Overhead</strong>: LRU requires additional overhead, such as tracking page access times and calculating page replacement metrics.</li>
+        <li><strong>Difficult to Implement</strong>: LRU can be more difficult to implement than FIFO, especially in systems with a large number of pages.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>Algorithm</h2>
+      <p>The LRU algorithm works as follows:</p>
+      <ol>
+        <li><strong>Initialize</strong>: Initialize an empty list (L) to store the pages in memory, where each page is associated with a timestamp of its last access.</li>
+        <li><strong>Page Reference</strong>: For each page reference (P) from the page reference string:
+          <ol>
+            <li><strong>Check</strong>: Check if P is already in L.</li>
+            <li><strong>Not in L</strong>: If P is not in L:
+              <ol>
+                <li><strong>Full</strong>: If L is full (i.e., the number of pages in L equals the number of frames):
+                  <ol>
+                    <li><strong>Find LRU</strong>: Find the page in L with the oldest timestamp (i.e., the least recently used page).</li>
+                    <li><strong>Remove</strong>: Remove the page found in step 2.1 from L.</li>
+                    <li><strong>Add</strong>: Add P to L with the current timestamp.</li>
+                  </ol>
+                </li>
+                <li><strong>Not Full</strong>: If L is not full:
+                  <ol>
+                    <li><strong>Add</strong>: Add P to L with the current timestamp.</li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+            <li><strong>In L</strong>: If P is already in L:
+              <ol>
+                <li><strong>Update</strong>: Update the timestamp of P to the current time.</li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><strong>Repeat</strong>: Repeat step 2 until all page references have been processed.</li>
+        <li><strong>Output</strong>: Output the final state of the list, including the pages in memory and the number of page faults.</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <h2>LRU Simulation</h2>
+      <form id="input-form">
+        <label for="numFrames">Number of Frames:</label>
+        <input type="number" id="numFrames" required min="1">
+        <label for="referenceString">Page Reference String (comma-separated):</label>
+        <input type="text" id="referenceString" required>
+        <button type="submit">Calculate</button>
+      </form>
+      <div id="output-container"></div>
+    </section>
+
+    <footer>
+      <a href="index.html">Back to Main Page</a>
+    </footer>
+  </main>
+
+  <script>
+   document.getElementById('input-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const numFrames = parseInt(document.getElementById('numFrames').value);
+  const referenceString = document.getElementById('referenceString').value
+    .split(',')
+    .map(val => val.trim()) // Remove any extra spaces
+    .filter(val => !isNaN(val)) // Exclude invalid entries
+    .map(Number);
+
+  if (isNaN(numFrames) || numFrames <= 0 || referenceString.length === 0) {
+    alert('Please enter valid inputs.');
+    return;
+  }
+
+  lruPageReplacement(referenceString, numFrames);
+});
+
+function lruPageReplacement(referenceString, numFrames) {
+  let frames = Array(numFrames).fill(-1);
+  let recentIndexes = {};
+  let hits = 0, misses = 0;
+
+  const table = Array(numFrames + 2).fill(null).map(() => Array(referenceString.length).fill('-'));
+
+  for (let i = 0; i < referenceString.length; i++) {
+    table[0][i] = referenceString[i];
+  }
+
+  for (let i = 0; i < referenceString.length; i++) {
+    const currentPage = referenceString[i];
+
+    if (frames.includes(currentPage)) {
+      hits++;
+      table[numFrames + 1][i] = "Hit";
+      recentIndexes[currentPage] = i;
+    } else {
+      misses++;
+      table[numFrames + 1][i] = "Miss";
+
+      if (frames.includes(-1)) {
+        for (let j = 0; j < numFrames; j++) {
+          if (frames[j] === -1) {
+            frames[j] = currentPage;
+            recentIndexes[currentPage] = i;
+            break;
+          }
+        }
+      } else {
+        let lruPage = null;
+        let lruIndex = Infinity;
+
+        for (const page of frames) {
+          if (recentIndexes[page] < lruIndex) {
+            lruIndex = recentIndexes[page];
+            lruPage = page;
+          }
+        }
+
+        const replaceIndex = frames.indexOf(lruPage);
+        frames[replaceIndex] = currentPage;
+        recentIndexes[currentPage] = i;
+      }
+    }
+
+    for (let j = 0; j < numFrames; j++) {
+      table[j + 1][i] = frames[j] !== -1 ? frames[j] : "-";
+    }
+  }
+
+  const outputContainer = document.getElementById('output-container');
+  outputContainer.innerHTML = ''; // Clear previous output
+
+  let html = '<table><thead><tr><th>Step</th>';
+  for (let i = 0; i < referenceString.length; i++) {
+    html += `<th>${i + 1}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  html += '<tr class="pages-row"><td>Pages</td>';
+  table[0].forEach(cell => {
+    html += `<td>${cell}</td>`;
+  });
+  html += '</tr>';
+
+  for (let i = 0; i < numFrames; i++) {
+    html += `<tr><td>Frame ${i + 1}</td>`;
+    table[i + 1].forEach(cell => {
+      html += `<td>${cell}</td>`;
+    });
+    html += '</tr>';
+  }
+
+  html += '<tr><td>Result</td>';
+  table[numFrames + 1].forEach(cell => {
+    html += `<td>${cell}</td>`;
+  });
+  html += '</tr></tbody></table>';
+
+  html += `<p><strong>Total Hits:</strong> ${hits}</p>`;
+  html += `<p><strong>Total Misses:</strong> ${misses}</p>`;
+  outputContainer.innerHTML = html;
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belady's Anomaly Algorithm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #28a745;
+      font-size: 2.5em;
+    }
+    h2 {
+      color: #218838;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 5px;
+    }
+    p, ul {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+    }
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+    .row-pages {
+      background-color: #FF8383;
+      color: white;
+    }
+    input[type="number"], input[type="text"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    a {
+      color: #28a745;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9em;
+    }
+    .content-section {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Belady's Anomaly Algorithm</h1>
+  </header>
+
+  <main>
+    <section class="content-section">
+      <h2>What is Belady's Anomaly?</h2>
+      <p>Belady's Anomaly is a phenomenon that occurs in certain page replacement algorithms, particularly the FIFO (First-In-First-Out) algorithm. It demonstrates that, under certain circumstances, increasing the number of frames (pages) in memory can actually increase the number of page faults, contrary to the expectation that adding more frames should reduce page faults.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>Advantages of Understanding Belady's Anomaly</h2>
+      <ul>
+        <li><strong>Identifies potential issues:</strong> Belady's Anomaly highlights potential inefficiencies in page replacement algorithms, allowing developers to optimize them.</li>
+        <li><strong>Improves algorithm design:</strong> Knowledge of this anomaly can lead to the creation of more efficient page replacement algorithms.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>Disadvantages of Belady's Anomaly</h2>
+      <ul>
+        <li><strong>Counterintuitive behavior:</strong> It is difficult to predict when Belady's Anomaly will occur, leading to potentially counterproductive outcomes.</li>
+        <li><strong>Difficulty in prediction:</strong> The phenomenon makes it harder to optimize algorithms for all cases, as the effect is unpredictable.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <h2>Steps to Demonstrate Belady's Anomaly</h2>
+      <ol>
+        <li>Initialize a page replacement algorithm (e.g., FIFO) with a small number of frames.</li>
+        <li>Generate a reference string of page requests.</li>
+        <li>Run the algorithm with the small number of frames and count the page faults.</li>
+        <li>Increase the number of frames and re-run the algorithm using the same reference string.</li>
+        <li>Compare the number of page faults after increasing the frames to the initial results.</li>
+        <li>If the number of page faults increases with more frames, Belady's Anomaly has occurred.</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <h2>Run the Belady's Anomaly Algorithm Simulation</h2>
+      <label for="numFrames">Number of Frames:</label>
+      <input type="number" id="numFrames" min="1" required>
+      <label for="referenceString">Page Reference String (comma-separated):</label>
+      <input type="text" id="referenceString" placeholder="e.g., 5,8,9,5,8,9,6" required>
+      <button onclick="simulateFIFO()">Run Simulation</button>
+    </section>
+
+    <div id="output-section"></div>
+
+    <footer>
+      <a href="index.html" style="color: #28a745; font-weight: bold;">Back to Main Page</a>
+    </footer>
+  </main>
+
+  <script>
+    function simulateFIFO() {
+      const numFrames = parseInt(document.getElementById('numFrames').value);
+      const referenceString = document.getElementById('referenceString').value.split(',').map(num => parseInt(num.trim()));
+
+      if (isNaN(numFrames) || referenceString.some(isNaN)) {
+        alert('Please enter valid input for frames and reference string.');
+        return;
+      }
+
+      let frames = Array(numFrames).fill(-1);
+      let frameQueue = [];
+      let hits = 0, misses = 0;
+      let tableData = [];
+      let resultRow = [];
+
+      for (let i = 0; i < referenceString.length; i++) {
+        const currentPage = referenceString[i];
+        let hit = frames.includes(currentPage);
+
+        if (hit) {
+          hits++;
+          resultRow.push('Hit');
+        } else {
+          misses++;
+          resultRow.push('Miss');
+
+          if (frameQueue.length < numFrames) {
+            for (let j = 0; j < numFrames; j++) {
+              if (frames[j] === -1) {
+                frames[j] = currentPage;
+                frameQueue.push(j);
+                break;
+              }
+            }
+          } else {
+            const oldestIndex = frameQueue.shift();
+            frames[oldestIndex] = currentPage;
+            frameQueue.push(oldestIndex);
+          }
+        }
+
+        tableData.push([...frames]);
+      }
+
+      let outputHTML = '<table class="output-table">';
+      outputHTML += '<tr><th>Step</th>' + referenceString.map((_, i) => `<th>${i + 1}</th>`).join('') + '</tr>';
+      outputHTML += '<tr class="row-pages"><th>Pages</th>' + referenceString.map(p => `<td>${p}</td>`).join('') + '</tr>';
+
+      for (let i = 0; i < numFrames; i++) {
+        outputHTML += `<tr><th>Frame ${i + 1}</th>` +
+                      tableData.map(step => `<td>${step[i] !== -1 ? step[i] : '-'}</td>`).join('') +
+                      '</tr>';
+      }
+
+      outputHTML += '<tr><th>Result</th>' + resultRow.map(res => `<td>${res}</td>`).join('') + '</tr>';
+      outputHTML += '</table>';
+
+      outputHTML += `<div class="result">Total Hits: ${hits}</div>`;
+      outputHTML += `<div class="result">Total Misses (Page Faults): ${misses}</div>`;
+      outputHTML += `<div class="result">Belady's Anomaly occurs when increasing the number of frames results in more page faults.</div>`;
+
+      document.getElementById('output-section').innerHTML = outputHTML;
+    }
+  </script>
+</body>
+</html>
